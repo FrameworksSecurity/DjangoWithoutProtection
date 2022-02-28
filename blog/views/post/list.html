@@ -1,0 +1,53 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}{{ data.title }}{% endblock %}
+{% block description %}{{ data.description }}{% endblock %}
+
+{% block content %}
+<!-- All Post(s) -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+     
+      {% for post in data.posts %}
+        <div class="post-preview">
+          <a href="{% url 'posts.show' post.getId %}">
+            <h2 class="post-title">{{ post.getTitle | safe}}</h2>
+          </a>
+          <h3 class="post-subtitle font-300">
+            {{ post.getDescription | safe}}
+          </h3>
+          <p class="post-meta">Posted by
+            <span class="font-bold">Admin</span>
+            on {{ post.getCreatedAt }}</p>
+        </div>
+        <hr>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <div class="card">
+        <div class="card-header">
+          Create a new post
+        </div>
+        <div class="card-body">
+          <form method="POST" action="{% url 'posts.save' %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label>Post title:</label>
+              <input type="text" name="title" required class="form-control" placeholder="Enter title">
+            </div>
+            <div class="form-group">
+              <label>Post description:</label>
+              <textarea class="form-control" name="description" required rows="3" placeholder="Enter description"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}
