@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
 
 class Post(models.Model):
     id = models.BigAutoField(primary_key=True)

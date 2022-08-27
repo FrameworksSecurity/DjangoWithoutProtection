@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from blog.Models.Post import Post
 from blog.Models.Comment import Comment
-
+from django.db import connection
+from datetime import datetime
+import mysql.connector
 
 class PostController:
     @staticmethod
@@ -23,12 +25,15 @@ class PostController:
 
     @staticmethod
     def save(request):
+        cnx = mysql.connector.connect(user='root', database='blog_django')
+        cursor = cnx.cursor()
         if request.method == "POST":
-            newPost = Post()
-            newPost.setTitle(request.POST.get("title"))
-            newPost.setDescription(request.POST.get("description"))
-            newPost.clean()
-            newPost.save()
+            title = request.POST.get("title")
+            description= request.POST.get("description")
+            created_at= datetime.now()
+            updated_at = datetime.now()
+            query="INSERT INTO blog_post (created_at, updated_at, title, description) VALUES('%s', '%s', '%s', '%s')" % (created_at, updated_at,title, description)
+            cursor.execute(query, multi=True)
             return redirect("/posts")
         else:
             return redirect("/posts")

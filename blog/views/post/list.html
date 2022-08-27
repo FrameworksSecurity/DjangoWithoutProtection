@@ -34,7 +34,7 @@
         </div>
         <div class="card-body">
           <form method="POST" action="{% url 'posts.save' %}">
-            {% csrf_token %}
+            <!-- {% csrf_token %} -->
             <div class="form-group">
               <label>Post title:</label>
               <input type="text" name="title" required class="form-control" placeholder="Enter title">

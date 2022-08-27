@@ -1,6 +1,7 @@
 from django.urls import path
 from .Controllers.HomeController import HomeController
 from .Controllers.PostController import PostController
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path("", HomeController.index, name="home.index"),
