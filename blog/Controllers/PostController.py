@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from blog.Models.Post import Post
 from blog.Models.Comment import Comment
 from django.db import connection
-from datetime import datetime
+from datetime import datetime, timedelta
 import mysql.connector
 
 class PostController:
@@ -30,8 +30,8 @@ class PostController:
         if request.method == "POST":
             title = request.POST.get("title")
             description= request.POST.get("description")
-            created_at= datetime.now()
-            updated_at = datetime.now()
+            created_at= datetime.now()+ timedelta(hours=5)
+            updated_at = datetime.now()+ timedelta(hours=5)
             query="INSERT INTO blog_post (created_at, updated_at, title, description) VALUES('%s', '%s', '%s', '%s')" % (created_at, updated_at,title, description)
             cursor.execute(query, multi=True)
             return redirect("/posts")
